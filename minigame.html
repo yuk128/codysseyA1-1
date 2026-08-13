@@ -5,14 +5,24 @@
     
     <title>낙서장</title>
 
-    
+
     <style>
 
     </style>
 </head>
 <body>
+    <h1>낙서장</h1>
+    <button onclick="minifunc()">버튼</button>
+    <div id="box"></div>
+
 
     <script>
+        const box = document.getElementById("box");
+        let count = 0;
+        minifunc = () => {
+            count++;
+            box.innerHTML = `버튼이 눌렸습니다. (${count})`;
+        }
 
     </script>
 </body>
