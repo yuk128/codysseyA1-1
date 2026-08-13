@@ -21,7 +21,14 @@
         let count = 0;
         minifunc = () => {
             count++;
-            box.innerHTML = `버튼이 눌렸습니다. (${count})`;
+            box.innerHTML = `버튼이 눌렸습니다. (${count})<br>`;
+            box.innerHTML += "*";
+            
+
+
+            if (count % 10 === 0) {
+                box.innerHTML += "<br>우와!";
+            }
         }
 
     </script>
