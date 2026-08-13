@@ -20,16 +20,20 @@
         const box = document.getElementById("box");
         let count = 0;
         minifunc = () => {
-            count++;
-            box.innerHTML = `버튼이 눌렸습니다. (${count})<br>`;
-            box.innerHTML += "*";
-            
+    count++;
+    box.innerHTML = `버튼이 눌렸습니다. (${count.toString(2)})<br>`;
 
+    // 0부터 4까지 5번 반복
+    for (let i = 0; i < 10; i++) {
+        // Math.floor로 정수 나눗셈 처리 후 2로 나눈 나머지 계산
+        const repeatCount = Math.floor(count / Math.pow(2, i)) % 2;
+        box.innerHTML += `${i} ${"*".repeat(repeatCount)}<br>`;
+    }
 
-            if (count % 10 === 0) {
-                box.innerHTML += "<br>우와!";
-            }
-        }
+    if (count % 10 === 0) {
+        box.innerHTML += "우와!";
+    }
+}
 
     </script>
 </body>
