@@ -79,7 +79,7 @@ def diteil_print():
     print("1. 수정")
     print("2. 삭제")
     print("3. 즐겨찾기 추가/해제")
-    print("3. 뒤로가기")
+    print("4. 뒤로가기")
     answer = input()
     return answer
 
@@ -252,8 +252,6 @@ while True:
     else:
         print("잘못된 형식 입니다.")
         print(f"입력된 값: {stringvalue}")
-        save_data()
-        break
     save_data()
     input()
 
