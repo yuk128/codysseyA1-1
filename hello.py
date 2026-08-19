@@ -1,4 +1,9 @@
 import json
+
+# 메모
+# 상세 보기 만들기(수정 삭제 기능포함)
+# 
+
 categorys = ["텍스트 생성", "이미지 생성", "자동화"]
 
 prompts = [{
@@ -41,8 +46,7 @@ def start_print():
     print("2. 목록 보기")
     print("3. 카테고리별 조회")
     print("4. 검색")
-    print("5. 상세 보기")
-    print("6. 즐겨찾기")
+    print("5. 즐겨찾기")
     answer = input()
     return answer
 
@@ -91,6 +95,28 @@ while True:
                 for i in prompts:
                     if i["category"] == categorys[int(numB-1)]:
                         print(f"{i["title"]}")
+
+    elif stringvalue == "4":
+        print("프롬포트 검색")
+        keyword = input("검색어: ")
+        count = 0
+
+        for i in range(len(prompts)):
+            if keyword in prompts[i]["title"] or keyword in prompts[i]["content"]:
+                print(f"{i+1}. {prompts[i]["title"]}")
+                count = count + 1
+
+        if count == 0:
+            print("검색 결과가 없습니다.")
+        else:
+            print(f"{count}개의 프롬프트를 찾았습니다.")
+
+
+       
+    elif stringvalue == "5":
+        for i in prompts:
+            if i["favorite"]:
+                print(f"{i["title"]}")
 
     elif stringvalue == "q":
         break
