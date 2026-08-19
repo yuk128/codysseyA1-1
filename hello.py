@@ -63,6 +63,7 @@ def diteil_print():
     print("사용하실 기능을 선택해 주세요")
     print("1. 수정")
     print("2. 삭제")
+    print("3. 즐겨찾기 추가/해제")
     print("3. 뒤로가기")
     answer = input()
     return answer
@@ -160,7 +161,7 @@ while True:
                         print("즐겨찾기: X")
                     print(f"내용: {i["content"]}")
                     input()
-                    
+
                     numE = diteil_print()
                     if numE == "1":
                         print("프롬포트 수정")
@@ -184,7 +185,15 @@ while True:
                         break
 
                     elif numE == "3":
-                        print("뒤로 갑니다.")
+                        if i["favorite"]:
+                            i["favorite"] = False
+                            print("즐겨찾기가 해제되었습니다.")
+                        else:
+                            i["favorite"] = True
+                            print("즐겨찾기에 추가되었습니다.")
+
+                    elif numE == "4":
+                        print("시작 메뉴로 이동합니다.")
 
                     else:
                         print("잘못된 형식 입니다.")
