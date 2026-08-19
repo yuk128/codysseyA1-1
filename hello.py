@@ -1,4 +1,5 @@
 import json
+import time
 
 # 메모
 # 상세 보기 만들기(수정 삭제 기능포함)
@@ -7,31 +8,37 @@ import json
 categorys = ["텍스트 생성", "이미지 생성", "자동화"]
 
 prompts = [{
+        "id": 1,
         "title": "SEO 블로그 글 작성",
         "content": "주어진 주제로 SEO에 최적화된 블로그 글을 작성해줘.",
         "category": categorys[0],
         "favorite": True
     },{
+        "id": 2,
         "title": "비즈니스 영문 이메일 번역",
         "content": "다음 내용을 정중한 톤의 비즈니스 영문 이메일로 바꿔줘.",
         "category": categorys[0],
         "favorite": False
     },{
+        "id": 3,
         "title": "3D 스마트워치 썸네일",
         "content": "파스텔톤 배경의 세련된 3D 스마트워치 렌더링 이미지 생성해줘.",
         "category": categorys[1],
         "favorite": True
     },{
+        "id": 4,
         "title": "카페 인테리어 컨셉샷",
         "content": "따뜻한 햇살이 들어오는 우드톤 앤티크 카페 인테리어 사진.",
         "category": categorys[1],
         "favorite": False
     },{
+        "id": 5,
         "title": "뉴스 기사 3줄 요약",
         "content": "제공된 뉴스 기사의 핵심 내용을 3줄로 요약해줘.",
         "category": categorys[2],
         "favorite": True
     },{
+        "id": 6,
         "title": "주간 업무 보고서 정리",
         "content": "작업 내역을 성과, 계획, 리스크 3가지 파트로 정돈해줘.",
         "category": categorys[2],
@@ -47,6 +54,7 @@ def start_print():
     print("3. 카테고리별 조회")
     print("4. 검색")
     print("5. 즐겨찾기")
+    print("6. 상세보기")
     answer = input()
     return answer
 
@@ -73,7 +81,10 @@ while True:
         print(categorys)
         categA = categorys[b]
 
-        prompts.append({"title": title,
+        newid = len(prompts) + 1
+
+        prompts.append({"id": newid,
+                "title": title,
                 "content": content,
                 "category": categA,
                 "favorite": False})
@@ -82,7 +93,7 @@ while True:
     elif stringvalue == "2":
         print("전체 프롬포트 목록")
         for i in range(len(prompts)):
-            print(f"{i+1}. {prompts[i]["title"]}")
+            print(f"{prompts[i]["title"]} ({prompts[i]["id"]})")
             
     elif stringvalue == "3":
         print(categorys)
@@ -90,11 +101,11 @@ while True:
         c=numA.isdigit()
 
         if c:
-            numB = int(numA)  # 안전하게 형변환
+            numB = int(numA)
             if numB < len(categorys):
                 for i in prompts:
                     if i["category"] == categorys[int(numB-1)]:
-                        print(f"{i["title"]}")
+                        print(f"{i["title"]} ({i["id"]})")
 
     elif stringvalue == "4":
         print("프롬포트 검색")
@@ -103,7 +114,7 @@ while True:
 
         for i in range(len(prompts)):
             if keyword in prompts[i]["title"] or keyword in prompts[i]["content"]:
-                print(f"{i+1}. {prompts[i]["title"]}")
+                print(f"{prompts[i]["title"]} ({prompts[i]["id"]})")
                 count = count + 1
 
         if count == 0:
@@ -116,7 +127,34 @@ while True:
     elif stringvalue == "5":
         for i in prompts:
             if i["favorite"]:
-                print(f"{i["title"]}")
+                print(f"{i["title"]} ({i["id"]})")
+
+
+    elif stringvalue == "6":
+        numC = input("프롬포트 번호: ")
+        
+        d = numC.isdigit()
+
+        if d:
+            numD = int(numC)
+            found = False
+
+            for i in prompts:
+                if i["id"] == numD:
+                    found = True
+                    print(f"제목: {i["title"]}")
+                    print(f"카테고리: {i["category"]}")
+                    if i["favorite"]:
+                        print("즐겨찾기: O")
+                    else:
+                        print("즐겨찾기: X")
+                    print(f"내용: {i["content"]}")
+
+            if not found:
+                print("해당 번호의 프롬프트가 없습니다.")
+        else:
+            print("숫자를 입력해주세요.")
+
 
     elif stringvalue == "q":
         break
@@ -124,6 +162,6 @@ while True:
         print("잘못된 형식 입니다.")
         print(f"입력된 값: {stringvalue}")
         break
-    
+    input()
 
 print("프로그램이 종료 되었습니다.")
