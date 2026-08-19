@@ -159,7 +159,35 @@ while True:
                     else:
                         print("즐겨찾기: X")
                     print(f"내용: {i["content"]}")
+                    input()
                     
+                    numE = diteil_print()
+                    if numE == "1":
+                        print("프롬포트 수정")
+                        newtitle = input("새 제목: ")
+                        newcontent = input("새 내용: ")
+                        newcategory = input("새 카테고리: ")
+                        a,b = list_check(categorys, newcategory)
+
+                        if not a:
+                            categorys.append(newcategory)
+                        catB = categorys[b]
+
+                        i["title"] = newtitle
+                        i["content"] = newcontent
+                        i["category"] = catB
+                        print("수정 되었습니다.")
+
+                    elif numE == "2":
+                        prompts.remove(i)
+                        print("삭제 되었습니다.")
+                        break
+
+                    elif numE == "3":
+                        print("뒤로 갑니다.")
+
+                    else:
+                        print("잘못된 형식 입니다.")
                     
 
             if not found:
