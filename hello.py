@@ -5,46 +5,60 @@ import time
 # 상세 보기 만들기(수정 삭제 기능포함)
 # 
 
-categorys = ["텍스트 생성", "이미지 생성", "자동화"]
+def load_data():
+    try:
+        f = open("prompts.json", "r", encoding="utf-8")
+        data = json.load(f)
+        f.close()
+        return data["categorys"], data["prompts"]
+    except FileNotFoundError:
+        categorys = ["텍스트 생성", "이미지 생성", "자동화"]
+        prompts = [{
+                "id": 1,
+                "title": "SEO 블로그 글 작성",
+                "content": "주어진 주제로 SEO에 최적화된 블로그 글을 작성해줘.",
+                "category": categorys[0],
+                "favorite": True
+            },{
+                "id": 2,
+                "title": "비즈니스 영문 이메일 번역",
+                "content": "다음 내용을 정중한 톤의 비즈니스 영문 이메일로 바꿔줘.",
+                "category": categorys[0],
+                "favorite": False
+            },{
+                "id": 3,
+                "title": "3D 스마트워치 썸네일",
+                "content": "파스텔톤 배경의 세련된 3D 스마트워치 렌더링 이미지 생성해줘.",
+                "category": categorys[1],
+                "favorite": True
+            },{
+                "id": 4,
+                "title": "카페 인테리어 컨셉샷",
+                "content": "따뜻한 햇살이 들어오는 우드톤 앤티크 카페 인테리어 사진.",
+                "category": categorys[1],
+                "favorite": False
+            },{
+                "id": 5,
+                "title": "뉴스 기사 3줄 요약",
+                "content": "제공된 뉴스 기사의 핵심 내용을 3줄로 요약해줘.",
+                "category": categorys[2],
+                "favorite": True
+            },{
+                "id": 6,
+                "title": "주간 업무 보고서 정리",
+                "content": "작업 내역을 성과, 계획, 리스크 3가지 파트로 정돈해줘.",
+                "category": categorys[2],
+                "favorite": False
+            }
+        ]
+        return categorys, prompts
 
-prompts = [{
-        "id": 1,
-        "title": "SEO 블로그 글 작성",
-        "content": "주어진 주제로 SEO에 최적화된 블로그 글을 작성해줘.",
-        "category": categorys[0],
-        "favorite": True
-    },{
-        "id": 2,
-        "title": "비즈니스 영문 이메일 번역",
-        "content": "다음 내용을 정중한 톤의 비즈니스 영문 이메일로 바꿔줘.",
-        "category": categorys[0],
-        "favorite": False
-    },{
-        "id": 3,
-        "title": "3D 스마트워치 썸네일",
-        "content": "파스텔톤 배경의 세련된 3D 스마트워치 렌더링 이미지 생성해줘.",
-        "category": categorys[1],
-        "favorite": True
-    },{
-        "id": 4,
-        "title": "카페 인테리어 컨셉샷",
-        "content": "따뜻한 햇살이 들어오는 우드톤 앤티크 카페 인테리어 사진.",
-        "category": categorys[1],
-        "favorite": False
-    },{
-        "id": 5,
-        "title": "뉴스 기사 3줄 요약",
-        "content": "제공된 뉴스 기사의 핵심 내용을 3줄로 요약해줘.",
-        "category": categorys[2],
-        "favorite": True
-    },{
-        "id": 6,
-        "title": "주간 업무 보고서 정리",
-        "content": "작업 내역을 성과, 계획, 리스크 3가지 파트로 정돈해줘.",
-        "category": categorys[2],
-        "favorite": False
-    }
-]
+def save_data():
+    f = open("prompts.json", "w", encoding="utf-8")
+    json.dump({"categorys": categorys, "prompts": prompts}, f, ensure_ascii=False, indent=2)
+    f.close()
+
+categorys, prompts = load_data()
 
 def start_print():
     print("="*10,"프롬포트 정리 프로그램","="*10)
@@ -55,6 +69,7 @@ def start_print():
     print("4. 검색")
     print("5. 즐겨찾기")
     print("6. 상세보기")
+    print("7. 내보내기")
     answer = input()
     return answer
 
@@ -113,7 +128,11 @@ while True:
     elif stringvalue == "2":
         print("전체 프롬포트 목록")
         for i in range(len(prompts)):
-            print(f"{prompts[i]["title"]} ({prompts[i]["id"]})")
+            if prompts[i]["favorite"]:
+                star = "⭐"
+            else:
+                star = ""
+            print(f"{prompts[i]["id"]}. {prompts[i]["title"]}{star} {prompts[i]["category"]}")
             
     elif stringvalue == "3":
         print(categorys)
@@ -213,13 +232,29 @@ while True:
         else:
             print("숫자를 입력해주세요.")
 
+    elif stringvalue == "7":
+        f = open("prompts.md", "w", encoding="utf-8")
+
+        for cat in categorys:
+            f.write(f"## {cat}\n")
+            for i in prompts:
+                if i["category"] == cat:
+                    f.write(f"- {i["title"]} ({i["id"]})\n {i["content"]} \n")
+            f.write("\n")
+
+        f.close()
+        print("prompts.md 파일로 내보냈습니다.")
+
 
     elif stringvalue == "q":
+        save_data()
         break
     else:
         print("잘못된 형식 입니다.")
         print(f"입력된 값: {stringvalue}")
+        save_data()
         break
+    save_data()
     input()
 
 print("프로그램이 종료 되었습니다.")
