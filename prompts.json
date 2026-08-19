@@ -46,6 +46,13 @@
       "content": "작업 내역을 성과, 계획, 리스크 3가지 파트로 정돈해줘.",
       "category": "자동화",
       "favorite": false
+    },
+    {
+      "id": 7,
+      "title": "실험용",
+      "content": "기능확인을 위한 실험용 데이터 입니다.",
+      "category": "텍스트 생성",
+      "favorite": false
     }
   ]
 }

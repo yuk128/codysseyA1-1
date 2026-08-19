@@ -113,7 +113,7 @@ while True:
 
         if not a:
             categorys.append(category)
-        print(categorys)
+            
         categA = categorys[b]
 
         newid = len(prompts) + 1
