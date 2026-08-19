@@ -35,7 +35,7 @@ prompts = [{
 ]
 
 def start_print():
-    print("프롬포트 정리 프로그램","="*10)
+    print("="*10,"프롬포트 정리 프로그램","="*10)
     print("사용하실 기능을 선택해 주세요")
     print("1. 프롬프트 추가")
     print("2. 목록 보기")
@@ -79,6 +79,19 @@ while True:
         print("전체 프롬포트 목록")
         for i in range(len(prompts)):
             print(f"{i+1}. {prompts[i]["title"]}")
+            
+    elif stringvalue == "3":
+        print(categorys)
+        numA = input("카테고리 번호")
+        c=numA.isdigit()
+
+        if c:
+            numB = int(numA)  # 안전하게 형변환
+            if numB < len(categorys):
+                for i in prompts:
+                    if i["category"] == categorys[int(numB-1)]:
+                        print(f"{i["title"]}")
+
     elif stringvalue == "q":
         break
     else:
