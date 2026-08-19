@@ -83,8 +83,17 @@ while True:
     if stringvalue == "1":
         print("프롬포트 추가")
         title = input("제목: ")
+        while title == "":
+            title = input("제목: ")
+
         content = input("프롬포트: ")
+        while content == "":
+            content = input("프롬포트: ")
+
         category = input("카테고리: ")
+        while category == "":
+            category = input("카테고리: ")
+
         a,b = list_check(categorys,category)
 
         if not a:
