@@ -58,6 +58,16 @@ def start_print():
     answer = input()
     return answer
 
+def diteil_print():
+    print("="*10)
+    print("사용하실 기능을 선택해 주세요")
+    print("1. 수정")
+    print("2. 삭제")
+    print("3. 뒤로가기")
+    answer = input()
+    return answer
+
+
 def list_check(list, string):
     for i in range(len(list)):
         if string==list[i]:
@@ -149,6 +159,8 @@ while True:
                     else:
                         print("즐겨찾기: X")
                     print(f"내용: {i["content"]}")
+                    
+                    
 
             if not found:
                 print("해당 번호의 프롬프트가 없습니다.")
